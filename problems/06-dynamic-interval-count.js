@@ -1,15 +1,4 @@
 /***********************************************************************
-Write a function, `dynamicIntervalCount`, that accepts a callback, a delay
-in milliseconds, and an optional amount as arguments. The function should 
-set an interval with the given callback and delay. If an amount argument 
-is passed, the interval should be cleared after the callback has been 
-called 'amount' number of times. If an amount argument is not passed,
-the interval should not be cleared and `dynamicIntervalCount` should instead
-return the Timeout object for the interval.
-
-In addition to Mocha, we recommend that you test your code manually using 
-node with the examples below.
-
 Examples:
 
 dynamicIntervalCount(function() {
@@ -23,11 +12,36 @@ const timeoutObject = dynamicIntervalCount(function() {
 
 console.log(timeoutObject); // Timeout { ... }
 ***********************************************************************/
+// Write a function, `dynamicIntervalCount`, that accepts a callback, a delay
+// in milliseconds, and an optional amount as arguments. The function should
+// set an interval with the given callback and delay. If an amount argument
+// is passed, the interval should be cleared after the callback has been
+// called 'amount' number of times. If an amount argument is not passed,
+// the interval should not be cleared and `dynamicIntervalCount` should instead
+// return the Timeout object for the interval.
+
+// In addition to Mocha, we recommend that you test your code manually using
+// node with the examples below.
 
 function dynamicIntervalCount(cb, delay, amount) {
-  // Your code here 
+  let count = 0
+
+  const interval = setInterval(() => {
+    if (count === amount) {
+      clearInterval(interval)
+    } else {
+      cb()
+      count++
+    }
+  }, delay);
+  
+  return interval
+
 }
 
+console.log(dynamicIntervalCount(function () {
+  console.log('hi');
+}, 5000, 3))
 /**************DO NOT MODIFY ANYTHING UNDER THIS  LINE*****************/
 try {
   module.exports = dynamicIntervalCount;
